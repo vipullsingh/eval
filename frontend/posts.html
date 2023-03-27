@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>My Posts</title>
+    <link rel="stylesheet" href="styles.css" />
+    
+  </head>
+  <body>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="posts.html">My Posts</a></li>
+        <li><a href="#" id="logout-btn">Logout</a></li>
+      </ul>
+    </nav>
+
+    <h1>My Posts</h1>
+    <div id="posts">
+      <div class="post">
+        <h2>Post Title</h2>
+        <p>Post Body</p>
+        <p>Device: Mobile</p>
+        <p>No. of Comments: 5</p>
+        <button class="delete-btn">Delete</button>
+        <button class="update-btn">Update</button>
+      </div>
+      <div class="post">
+        <h2>Post Title</h2>
+        <p>Post Body</p>
+        <p>Device: Laptop</p>
+        <p>No. of Comments: 3</p>
+        <button class="delete-btn">Delete</button>
+        <button class="update-btn">Update</button>
+      </div>
+      <!-- More posts here -->
+    </div>
+
+    <div id="pagination">
+      <button id="prev-btn">Prev</button>
+      <button id="next-btn">Next</button>
+      <p>Page 1 of 2</p>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      // Get the token from the local storage
+      const token = localStorage.getItem("token");
+
+      // Function to get the user's posts
+      const getUserPosts = () => {
+        // Send a GET request to the server to get the user's posts
+        fetch("/posts", {
+          headers: {
+            Authorization: `Bearer ${token}`, // Send the token in the Authorization header
+          },
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            const postsContainer = document.getElementById("posts-container");
+            // Clear the posts container
+            postsContainer.innerHTML = "";
+            // Loop through the posts and add them to the posts container
+            data.posts.forEach((post) => {
+              const postDiv = document.createElement("div");
+              postDiv.classList.add("post");
+              const title = document.createElement("h2");
+              title.textContent = post.title;
+              const body = document.createElement("p");
+              body.textContent = post.body;
+              const device = document.createElement("p");
+              device.textContent = `Device: ${post.device}`;
+              const comments = document.createElement("p");
+              comments.textContent = `Comments: ${post.no_of_comments}`;
+              const deleteBtn = document.createElement("button");
+              deleteBtn.textContent = "Delete";
+              deleteBtn.classList.add("delete-btn");
+              deleteBtn.addEventListener("click", () => {
+                deletePost(post._id);
+              });
+              const updateBtn = document.createElement("button");
+              updateBtn.textContent = "Update";
+              updateBtn.classList.add("update-btn");
+              updateBtn.addEventListener("click", () => {
+                updatePost(post._id);
+              });
+              postDiv.appendChild(title);
+              postDiv.appendChild(body);
+              postDiv.appendChild(device);
+              postDiv.appendChild(comments);
+              postDiv.appendChild(deleteBtn);
+              postDiv.appendChild(updateBtn);
+              postsContainer.appendChild(postDiv);
+            });
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      };
+
+      // Function to delete a post
+      const deletePost = (postId) => {
+        // Send a DELETE request to the server to delete the post
+        fetch(`/posts/${postId}`, {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`, // Send the token in the Authorization header
+          },
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data.message);
+            getUserPosts(); // Reload the posts
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      };
+
+      // Function to update a post
+      const updatePost = (postId) => {
+        // Get the post data from the user
+        const title = prompt("Enter the new title:");
+        const body = prompt("Enter the new body:");
+        const device = prompt("Enter the new device (Laptop, Tablet, Mobile):");
+        const no_of_comments = parseInt(
+          prompt("Enter the new number of comments:")
+        );
+        // Send a PUT request to the server to update the post
+        fetch(`/posts/${postId}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`, // Send the token in the Authorization header
+          },
+          body: JSON.stringify({
+            title,
+            body,
+            device,
+            no_of_comments,
+          }),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data.message);
+            getUserPosts(); // Reload the posts
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      };
+      // Call the getUserPosts function to get the user's posts when the page loads
+      window.addEventListener("load", () => {
+        getUserPosts();
+      });
+
+      // Add event listener to the logout button
+      const logoutBtn = document.getElementById("logout-btn");
+      logoutBtn.addEventListener("click", () => {
+        // Remove the token from the local storage and redirect to the login page
+        localStorage.removeItem("token");
+        window.location.href = "/login.html";
+      });
+    </script>
+  </body>
+</html>

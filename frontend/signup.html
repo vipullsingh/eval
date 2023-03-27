@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Signup</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Signup</h1>
+        <form id="signup-form">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="gender">Gender:</label>
+                <select id="gender" name="gender">
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="form-group">
+                <label for="age">Age:</label>
+                <input type="number" id="age" name="age" required>
+            </div>
+            <div class="form-group">
+                <label for="city">City:</label>
+                <input type="text" id="city" name="city" required>
+            </div>
+            <div class="form-group">
+                <label for="is-married">Married:</label>
+                <input type="checkbox" id="is-married" name="is-married">
+            </div>
+            <button type="submit">Signup</button>
+        </form>
+    </div>
+    <script>
+        const form = document.querySelector('form');
+        const nameInput = document.querySelector('#name');
+        const emailInput = document.querySelector('#email');
+        const passwordInput = document.querySelector('#password');
+        const confirmPasswordInput = document.querySelector('#confirm-password');
+        const genderInput = document.querySelector('#gender');
+        const ageInput = document.querySelector('#age');
+        const cityInput = document.querySelector('#city');
+        const isMarriedInput = document.querySelector('#is-married');
+      
+        form.addEventListener('submit', async (event) => {
+          event.preventDefault();
+      
+          const name = nameInput.value;
+          const email = emailInput.value;
+          const password = passwordInput.value;
+          const confirmPassword = confirmPasswordInput.value;
+          const gender = genderInput.value;
+          const age = ageInput.value;
+          const city = cityInput.value;
+          const isMarried = isMarriedInput.checked;
+      
+          if (password !== confirmPassword) {
+            alert('Passwords do not match!');
+            return;
+          }
+      
+          try {
+            const response = await fetch('/users/register', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                name,
+                email,
+                password,
+                gender,
+                age,
+                city,
+                is_married: isMarried
+              })
+            });
+      
+            if (!response.ok) {
+              const errorData = await response.json();
+              alert(errorData.message);
+              return;
+            }
+      
+            alert('Registration successful!');
+            window.location.href = '/login.html';
+          } catch (error) {
+            console.error(error);
+            alert('An error occurred while registering. Please try again later.');
+          }
+        });
+      </script>
+      
+</body>
+</html>

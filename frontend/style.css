@@ -1,0 +1,159 @@
+/* Navbar styles */
+nav {
+    background-color: #333;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+  }
+  
+  nav a {
+    color: #fff;
+    text-decoration: none;
+    margin-right: 20px;
+    font-size: 20px;
+  }
+  
+  nav a:hover {
+    color: #ccc;
+  }
+  
+  nav button {
+    background-color: #fff;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  /* Home page styles */
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  /* Signup and login page styles */
+  form {
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  
+  input[type="text"], input[type="email"], input[type="password"], input[type="number"] {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: none;
+  }
+  
+  input[type="submit"] {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  input[type="submit"]:hover {
+    background-color: #555;
+  }
+  
+  /* Posts page styles */
+  .posts {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  
+  .post {
+    background-color: #f2f2f2;
+    padding: 20px;
+    margin-bottom: 20px;
+    width: 30%;
+    border-radius: 5px;
+  }
+  
+  .post h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .post p {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+  
+  .post button {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+  }
+  
+  .post button:hover {
+    background-color: #555;
+  }
+  
+  .update-form {
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  
+  .update-form input[type="text"], .update-form textarea {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: none;
+  }
+  
+  .update-form input[type="submit"] {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .update-form input[type="submit"]:hover {
+    background-color: #555;
+  }
+  
+  /* Pagination styles */
+  .pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .pagination button {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+  }
+  
+  .pagination button:hover {
+    background-color: #555;
+  }
+  
+  .pagination button.active {
+    background-color: #555;
+    color: #fff;
+  }
+  
+  /* Counter styles */
